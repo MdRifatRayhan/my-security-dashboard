@@ -40,7 +40,7 @@ Click here to view the live app: https://sentinel-live.onrender.com
    git clone https://github.com/MdRifatRayhan/my-security-dashboard
    
 
-# 🛡️ PhishGuard Setup & Usage
+# 🛡️ log-analyzer Setup & Usage
 
 ### 🚀 Live Demo: https://sentinel-live.onrender.com
 
@@ -50,19 +50,31 @@ Click here to view the live app: https://sentinel-live.onrender.com
 
 2. Create a .env file and add your credentials:
    PORT=5000
+   
 MONGODB_URI=your_mongodb_connection_string
 
-3. Run the server:
+4. Run the server:
    $ npm run dev
 
 🚀 Usage & Testing Guide
+
 Once the app is running, follow this workflow:
+
 Secure Login: Create an admin account using the 'Create New Account' button, then log in.
+
 Log Upload: Click 'Upload Logs' and select a .log or .txt file (e.g., test_security.log).
+
 Real-time Analysis: Watch Socket.io Notifications pop up instantly as threats are detected.
+
 Threat Intel: Navigate to Threat Intel to see risk scores and Mitigation Recommendations.
+
 Export Data: Click 'Download PDF' for a summary or 'Export CSV' for raw data.
+
+
 🛡️ Disclaimer
 This tool is developed for educational and awareness purposes only. While it uses advanced heuristic detection techniques, it is designed for log analysis training and should be used in a controlled environment. Always practice ethical hacking and security research.
+
+
 Developed with ❤️ by [Md. Rifat Rayhan]
+
 Passionate about Cybersecurity and Full-Stack Development.
