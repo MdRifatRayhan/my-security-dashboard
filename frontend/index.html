@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+    if (!localStorage.getItem('token')) {
+        window.location.href = '/login.html';
+    }
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOC Dashboard | Sentinel</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fas fa-shield-halved"></i> <span>SENTINEL</span>
+            </div>
+            <ul>
+                <li class="active" data-view="dashboard"><i class="fas fa-chart-line"></i> Dashboard</li>
+                <li data-view="threats"><i class="fas fa-biohazard"></i> Threat Intel</li>
+                <li data-view="logs"><i class="fas fa-file-medical-alt"></i> Log Explorer</li>
+                <li data-view="alerts"><i class="fas fa-bell"></i> Alert Center</li>
+                 <li onclick="logout()" style="margin-top: 20px; color: #ef4444; border-top: 1px solid #334155;">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </li>
+            </ul>
+            <div class="actions">
+                <button id="btnSample" class="btn-secondary">Generate Samples</button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+       <main class="content">
+        <button id="btnCSV" class="btn-secondary" style="background: #10b981; margin-right: 10px;">
+    <i class="fas fa-file-csv"></i> Export CSV
+</button>
+    <header>
+        <h2 id="view-title">Security Overview</h2>
+        <div class="user-profile">
+
+             <button id="btnDownload" class="btn-secondary" style="background: #0ea5e9; margin-right: 10px; color: white; padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer;">
+        <i class="fas fa-file-pdf"></i> Download Report
+    </button>
+
+            <button id="btnReset" class="btn-secondary" style="background: #475569; margin-right: 10px; color: white; padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer;">
+        <i class="fas fa-trash-alt"></i> Reset Dashboard
+    </button>
+            <input type="file" id="logUpload" hidden accept=".log,.txt">
+            <button onclick="document.getElementById('logUpload').click()" class="btn-primary">
+                <i class="fas fa-upload"></i> Upload Logs
+            </button>
+        </div>
+    </header>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard-view" class="view-section">
+        <div class="stats-grid">
+            <div class="card stat"><h3>Total Logs</h3><p id="stat-total-logs">0</p></div>
+            <div class="card stat danger"><h3>Failed Logins</h3><p id="stat-failed">0</p></div>
+            <div class="card stat warning"><h3>Active Threats</h3><p id="stat-threats">0</p></div>
+            <div class="card stat success"><h3>Avg Risk</h3><p id="stat-risk">0%</p></div>
+        </div>
+        <div class="charts-grid">
+            <div class="card chart-container"><h3>Event Distribution</h3><canvas id="eventChart"></canvas></div>
+            <div class="card chart-container"><h3>Risk Severity</h3><canvas id="riskChart"></canvas></div>
+        </div>
+        <div class="card table-container">
+            <h3>Recent Critical Threats</h3>
+            <table id="threat-table">
+                <thead><tr><th>IP Address</th><th>Type</th><th>Severity</th><th>Score</th><th>Action</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Threats Intel Section -->
+    <section id="threats-view" class="view-section" style="display:none;">
+        <div class="card">
+            <h3>All Detected Threats</h3>
+            <table id="all-threats-table">
+                <thead><tr><th>Date</th><th>IP Address</th><th>Threat Type</th><th>Risk Score</th><th>Action</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Log Explorer Section -->
+    <section id="logs-view" class="view-section" style="display:none;">
+        <div class="card">
+            <h3>Raw Log Explorer (Last 100 Logs)</h3>
+            <div style="margin-bottom: 15px; display: flex; gap: 10px;">
+    <input type="text" id="logSearch" placeholder="Search by IP or Event..." 
+           style="padding: 8px; border-radius: 4px; border: 1px solid #334155; background: #0f172a; color: white; flex: 1;">
+    <!-- এই কোডটি আপনার index.html এর ড্রপডাউনের জায়গায় বসান -->
+<select id="severityFilter" style="padding: 8px; border-radius: 4px; border: 1px solid #334155; background: #0f172a; color: white;">
+    <option value="">All Types</option>
+    
+    <!-- এগুলো Threat Intel এ কাজ করবে -->
+    <option value="High">High Severity</option>
+    <option value="Medium">Medium Severity</option>
+    
+    <!-- এগুলো Log Explorer এ কাজ করবে -->
+    <option value="LOGIN_FAILED">Login Failed</option>
+    <option value="UNAUTHORIZED">Unauthorized Access</option>
+    <option value="SCAN">Port Scan detected</option>
+</select>
+</div>
+            <table id="raw-logs-table">
+                <thead><tr><th>Timestamp</th><th>IP Address</th><th>Event Type</th><th>Status</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Alert Center Section -->
+    <section id="alerts-view" class="view-section" style="display:none;">
+        <div class="card">
+            <h3>Critical Alerts</h3>
+            <div id="alerts-list"></div>
+        </div>
+    </section>
+</main>
+    </div>
+    <script src="js/api.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- Threat Details Modal -->
+<div id="threatModal" class="modal">
+    <div class="modal-content card">
+        <div class="modal-header">
+            <h3>Threat Analysis Details</h3>
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+        </div>
+        <div id="modal-body">
+            <!-- এখানে বিস্তারিত তথ্য আসবে -->
+        </div>
+    </div>
+</div>
+<!-- Socket.io Library -->
+<script src="/socket.io/socket.io.js"></script>
+
+<!-- Notification Toast -->
+<div id="notification-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
+</body>
+</html>

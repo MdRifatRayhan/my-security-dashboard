@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel | Security Access</title>
+    <!-- ড্যাশবোর্ডের সিএসএস ফাইল লিঙ্ক করা হলো -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* লগইন পেজের জন্য বিশেষ স্টাইল */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #0f172a; /* ডার্ক ব্যাকগ্রাউন্ড */
+            margin: 0;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            background: #1e293b;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .login-container .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: #3b82f6;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2 {
+            color: #f8fafc;
+            margin-bottom: 25px;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            color: #94a3b8;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .btn-full {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-btn {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .login-btn:hover {
+            background: #2563eb;
+        }
+
+        .register-btn {
+            background: transparent;
+            color: #94a3b8;
+            border: 1px solid #334155;
+            margin-top: 15px;
+        }
+
+        .register-btn:hover {
+            background: #334155;
+            color: white;
+        }
+
+        .msg {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="logo">
+            <i class="fas fa-shield-halved"></i> <span>SENTINEL</span>
+        </div>
+        
+        <h2>System Access</h2>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" id="username" placeholder="Enter username" required>
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Enter password" required>
+            </div>
+            
+            <button type="submit" class="btn-full login-btn">
+                <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+            </button>
+        </form>
+
+        <p class="msg">First time? Create your admin account below:</p>
+        
+        <button type="button" onclick="registerUser()" class="btn-full register-btn">
+            <i class="fas fa-user-plus"></i> Create New Account
+        </button>
+    </div>
+
+    <script>
+        // ১. লগইন লজিক
+        document.getElementById('loginForm').onsubmit = async (e) => {
+            e.preventDefault();
+            
+            const usernameInput = document.getElementById('username').value;
+            const passwordInput = document.getElementById('password').value;
+
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: usernameInput,
+                        password: passwordInput
+                    })
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.token) {
+                    // টোকেনটি ব্রাউজারে সেভ করা হচ্ছে
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('username', data.username);
+                    // ড্যাশবোর্ডে পাঠিয়ে দেওয়া হচ্ছে
+                    window.location.href = 'index.html';
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (err) {
+                console.error('Login error:', err);
+                alert('Connection failed. Is the server running?');
+            }
+        };
+
+        // ২. নতুন অ্যাকাউন্ট তৈরি করার লজিক
+        async function registerUser() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            if (!user || !pass) {
+                alert("Please type a username and password first, then click Create Account.");
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: user,
+                        password: pass
+                    })
+                });
+
+                const data = await res.json();
+                
+                if (res.ok) {
+                    alert("Success! " + data.message + ". Now you can click Login.");
+                } else {
+                    alert("Registration failed: " + data.message);
+                }
+            } catch (err) {
+                console.error('Registration error:', err);
+                alert('Connection error.');
+            }
+        }
+    </script>
+</body>
+</html>

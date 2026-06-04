@@ -1,0 +1,13 @@
+[2023-12-05 10:00:01] 103.45.12.5 - user: admin - Failed password attempt - 401
+[2023-12-05 10:00:05] 103.45.12.5 - user: admin - Invalid password for user - 401
+[2023-12-05 10:00:10] 103.45.12.5 - user: admin - Failed password - 401
+[2023-12-05 10:00:15] 103.45.12.5 - user: admin - Login failed again - 401
+[2023-12-05 10:00:20] 103.45.12.5 - user: admin - Failed login attempt - 401
+[2023-12-05 10:00:25] 103.45.12.5 - user: admin - Multiple failed passwords - 401
+Dec 05 10:10:00 server-auth: 45.120.33.2 - WARNING: Port scan detected on all ports - 200
+[2023-12-05 10:15:22] 172.16.254.1 - manager - LOGIN_SUCCESS - 200
+[2023-12-05 10:20:45] 185.220.101.44 - unauthorized access attempt to /etc/shadow - 403
+[2023-12-05 10:21:00] 185.220.101.44 - access denied for restricted resource - 403
+[2023-12-05 10:22:10] 185.220.101.44 - unauthorized probing - 403
+192.168.1.100 - root - accepted password - 200
+[2023-12-05 10:30:00] 8.8.8.8 - password reset requested - 200
