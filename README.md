@@ -55,16 +55,18 @@ MONGODB_URI=your_mongodb_connection_string
 3. Run the server:
    $ npm run dev
 
-🚀 Usage & Testing
-Login: Create an admin account using the 'Create Account' button and log in.
-Upload: Use the "Upload Logs" button to process a .log or .txt file.
-Analyze: View real-time alerts and detailed analysis in the Threat Intel section.
-Report: Download the PDF or CSV report for a professional security summary.
+🚀 Usage & Testing Guide
+Once the app is running, follow this workflow to test its core features:
+Step 1: Secure Login – Create an admin account using the 'Create New Account' button, then log in to access the private dashboard.
+Step 2: Log Upload – Click on the 'Upload Logs' button and select a .log or .txt file (e.g., the test_security.log you created).
+Step 3: Real-time Analysis – Watch the Socket.io Notifications pop up instantly as the engine detects threats.
+Step 4: Threat Intel – Navigate to the Threat Intel or Alert Center to see detailed risk scores and Mitigation Recommendations.
+Step 5: Export Data – Click on 'Download PDF' for a summary report or 'Export CSV' for raw threat data.
 
 
-🛡️ Disclaimer:
-This tool is for educational and awareness purposes. While it uses advanced detection techniques, it should be used in a controlled environment for log analysis training and awareness.
+🛡️ Disclaimer
+This tool is developed for educational and awareness purposes only. While it uses advanced heuristic detection techniques, it is designed for log analysis training and should be used in a controlled environment. Always practice ethical hacking and security research.
 
 
-Developed by Md. Rifat Rayhan
+Developed with ❤️ by [Md. Rifat Rayhan]
 Passionate about Cybersecurity and Full-Stack Development.
