@@ -1,0 +1,13 @@
+[2023-12-10 10:00:01] 103.255.10.5 - admin - Failed password attempt - 401
+[2023-12-10 10:00:05] 103.255.10.5 - admin - Failed password attempt - 401
+[2023-12-10 10:00:10] 103.255.10.5 - admin - Failed password attempt - 401
+[2023-12-10 10:00:15] 103.255.10.5 - admin - Failed password attempt - 401
+[2023-12-10 10:00:20] 103.255.10.5 - admin - Failed password attempt - 401
+[2023-12-10 10:00:25] 103.255.10.5 - admin - Failed password attempt - 401
+[2023-12-10 10:05:00] 45.120.33.2 - Anonymous - PORT_SCAN_DETECTED - 200
+[2023-12-10 10:10:00] 185.220.101.4 - user1 - Access denied to restricted area - 403
+[2023-12-10 10:11:00] 185.220.101.4 - user1 - Unauthorized access attempt - 403
+[2023-12-10 10:12:00] 185.220.101.4 - user1 - Access denied again - 403
+[2023-12-10 10:15:00] 192.168.1.100 - root - LOGIN_SUCCESS - 200
+[2023-12-10 10:20:00] 172.16.254.1 - manager - accepted password - 200
+[2023-12-10 10:30:00] 8.8.8.8 - system - password reset success - 200
