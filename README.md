@@ -1,4 +1,4 @@
-# 🛡️ Sentinel - Professional SOC Dashboard & Security Log Analyzer
+# Sentinel - Professional SOC Dashboard & Security Log Analyzer
 
 Sentinel is a full-stack **Cybersecurity Monitoring Dashboard** designed to simulate the core functionality of a Security Operations Center (SOC). It analyzes raw security logs to detect real-time threats like **Brute Force Attacks, Port Scans, and Unauthorized Access** using a smart heuristic engine and real-time alerts.
 
@@ -95,5 +95,4 @@ This tool is developed for **educational and awareness purposes** only. While it
 
 ---
 
-**Developed with ❤️ by [Md. Rifat Rayhan]**  
-*Passionate about **Cybersecurity** and **Full-Stack Development**.*  
+ 
